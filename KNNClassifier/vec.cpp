@@ -1,4 +1,5 @@
 #include <iostream>
+#include "stdafx.h"
 #include "vec.h"
 
 bool areEqualVectors(Vector left, Vector right)
