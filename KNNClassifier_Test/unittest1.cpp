@@ -6,7 +6,21 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace KNNClassifier_Test
 {		
-	TEST_CLASS(UnitTest1)
+	TEST_CLASS(CreateVectorFromArray)
+	{
+	public:
+		TEST_METHOD(createVectorFromArray_Test)
+		{
+			Vector a, b;
+			a.size = 2;
+			a.components = new double[2];
+			a.components[0] = a.components[1] = 1.0;
+			b = createVectorFromArray(2, 1.0, 1.0); //Применяем нашу функцию
+			Assert::AreEqual(true, areEqualVectors(a, b));
+		}
+	};
+
+	TEST_CLASS(AreEqualVectors)
 	{
 	public:
 
