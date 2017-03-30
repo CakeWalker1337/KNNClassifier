@@ -8,3 +8,4 @@ struct Vector {
 
 bool areEqualVectors(Vector v1, Vector v2);
 Vector createVectorFromArray(int size, ...);
+Vector getReverseVector(Vector v);

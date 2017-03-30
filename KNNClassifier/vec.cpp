@@ -31,3 +31,15 @@ Vector createVectorFromArray(int size, ...)
 	}
 	return vec;
 }
+
+Vector getReverseVector(Vector v)
+{
+	Vector* res = new Vector();
+	res->size = v.size;
+	double* a = new double[v.size];
+	res->components = a;
+	for (int i = 0; i < v.size; i++)
+		res->components[i] = -v.components[i];
+
+	return *res;
+}
