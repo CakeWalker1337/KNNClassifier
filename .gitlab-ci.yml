@@ -1,6 +1,6 @@
 stages:
   - build
-
+  - test
 job:
   stage: build
   script:
@@ -9,3 +9,12 @@ job:
   - ''
   - echo "Release build..."
   - '"C:\Program Files\MSBuild\14.0\Bin\msbuild.exe" /consoleloggerparameters:ErrorsOnly /maxcpucount /nologo /property:Configuration=Release /verbosity:quiet "KNNClassifier.sln"'
+
+test:
+  stage: test
+  script:
+  - echo "starting tests"
+  - cd %PROJECT_NAME%Tests/bin/Release
+  - '"D:\Programs\Visual Studio 2015 Community\Common7\IDE\MSTest.exe" /testcontainer:%PROJECT_NAME%Tests.dll'
+  dependencies:
+  - build
