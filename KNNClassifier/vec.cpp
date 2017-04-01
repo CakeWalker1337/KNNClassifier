@@ -31,3 +31,15 @@ Vector createVectorFromArray(int size, ...)
 	}
 	return vec;
 }
+
+Vector getVectorSum(Vector v1, Vector v2)
+{
+	Vector* res = new Vector();
+	res->size = v1.size;
+	double* a = new double[v1.size];
+	res->components = a;
+	for (int i = 0; i < v1.size; i++)
+		res->components[i] = v1.components[i] + v2.components[i];
+
+	return *res;
+}
