@@ -6,6 +6,18 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace KNNClassifier_Test
 {		
+	TEST_CLASS(GetVectorDif)
+	{
+	public:
+		TEST_METHOD(getVectorDif_Test)
+		{
+			Vector a = createVectorFromArray(2, 2.0, 1.0);
+			Vector b = createVectorFromArray(2, 1.0, 1.0);
+			Vector c = createVectorFromArray(2, 1.0, 0.0);
+			Assert::AreEqual(true, areEqualVectors(getVectorDif(a, b), c));
+		}
+	};
+
 	TEST_CLASS(GetVectorSum)
 	{
 	public:
