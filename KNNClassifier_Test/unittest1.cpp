@@ -10,10 +10,10 @@ namespace KNNClassifier_Test
 	TEST_CLASS(GetReverseVector)
 	{
 	public:
-		TEST_METHOD(getReverseVector_Test)
+		TEST_METHOD(getReverseVector_Normal)
 		{
-			Vector a = createVectorFromArray(2, 1.0, 1.0);
-			Vector b = createVectorFromArray(2, -1.0, -1.0);
+			Vector* a = createVectorFromArray(2, 1.0, 1.0);
+			Vector* b = createVectorFromArray(2, -1.0, -1.0);
 			Assert::AreEqual(true, areEqualVectors(a, getReverseVector(b)));
 		}
 	};

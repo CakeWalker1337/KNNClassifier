@@ -70,14 +70,14 @@ double getDistanceBetweenVectors(Vector* v1, Vector* v2)
 	return sqrt(dis);
 }
 
-Vector getReverseVector(Vector v)
+Vector* getReverseVector(Vector* v)
 {
 	Vector* res = new Vector();
-	res->size = v.size;
-	double* a = new double[v.size];
+	res->size = v->size;
+	double* a = new double[v->size];
 	res->components = a;
-	for (int i = 0; i < v.size; i++)
-		res->components[i] = -v.components[i];
+	for (int i = 0; i < v->size; i++)
+		res->components[i] = -v->components[i];
 
-	return *res;
+	return res;
 }
