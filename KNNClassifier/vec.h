@@ -7,7 +7,8 @@ struct Vector {
 	int size;
 };
 
-bool areEqualVectors(Vector v1, Vector v2);
-Vector createVectorFromArray(int size, ...);
-Vector getVectorSum(Vector v1, Vector v2);
-Vector getVectorDif(Vector v1, Vector v2);
+bool areEqualVectors(Vector* v1, Vector* v2);
+Vector* createVectorFromArray(int size, ...);
+Vector* getVectorSum(Vector* v1, Vector* v2);
+Vector* getVectorDif(Vector* v1, Vector* v2);
+double getDistanceBetweenVectors(Vector* v1, Vector* v2);
