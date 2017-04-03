@@ -1,0 +1,10 @@
+stages:
+  - build
+job:
+  stage: build
+  script:
+  - echo "Restoring NuGet Packages..."
+  - D:\Programs\NuGet\nuget.exe restore "KNNClassifier.sln"
+  - ''
+  - echo "Release build..."
+  - '"C:\Program Files\MSBuild\14.0\Bin\msbuild.exe" /consoleloggerparameters:ErrorsOnly /maxcpucount /nologo /property:Configuration=Release /verbosity:quiet "KNNClassifier.sln"'
