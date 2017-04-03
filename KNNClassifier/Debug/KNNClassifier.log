@@ -1,3 +1,6 @@
-﻿  KNNClassifier.cpp
+﻿  stdafx.cpp
+  vec.cpp
+  KNNClassifier.cpp
+  Создание кода...
   KNNClassifier.vcxproj -> D:\Programs\Visual Studio 2015 Community\Projects\BarD\Debug\KNNClassifier.exe
   KNNClassifier.vcxproj -> D:\Programs\Visual Studio 2015 Community\Projects\BarD\Debug\KNNClassifier.pdb (Full PDB)
