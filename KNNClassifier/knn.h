@@ -11,3 +11,5 @@ struct Group {
 	int count;
 	char label[32];
 };
+
+bool areEqualGroups(Group* g1, Group* g2);

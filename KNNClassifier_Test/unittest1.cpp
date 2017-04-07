@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "CppUnitTest.h"
 #include "../KNNClassifier/vec.cpp"
+#include "../KNNClassifier/knn.cpp"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -130,6 +131,44 @@ namespace KNNClassifier_Test
 			a->components[1] = 2.0;
 			if (areEqualVectors(a, b))
 				Assert::Fail(); //Если функция вернула true, закрываем тест вручную
+		}
+	};
+
+	TEST_CLASS(AreEqualGroups)
+	{
+	public:
+
+		TEST_METHOD(areEqualGroups_True)
+		{
+			Group* a = new Group();
+			Group* b = new Group();
+			a->count = b->count = 2; 
+			strcpy(a->label, "first");
+			strcpy(b->label, "first");
+			
+			Assert::AreEqual(true, areEqualGroups(a, b)); 
+		}
+
+		TEST_METHOD(areEqualGroups_False)
+		{
+			Group* a = new Group();
+			Group* b = new Group();
+			a->count = b->count = 2; 
+			strcpy(a->label, "first");
+			strcpy(b->label, "second");
+			Assert::AreNotEqual(true, areEqualGroups(a, b));
+		}
+
+		TEST_METHOD(areEqualGroups_InvalidSize)
+		{
+			Group* a = new Group();
+			Group* b = new Group();
+			a->count = 1;
+			b->count = 2; 
+			strcpy(a->label, "first");
+			strcpy(b->label, "first");
+			if (areEqualGroups(a, b))
+				Assert::Fail(); 
 		}
 	};
 }
