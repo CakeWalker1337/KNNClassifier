@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "CppUnitTest.h"
 #include "../KNNClassifier/vec.cpp"
+#include "../KNNClassifier/knn.cpp"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -130,6 +131,44 @@ namespace KNNClassifier_Test
 			a->components[1] = 2.0;
 			if (areEqualVectors(a, b))
 				Assert::Fail(); //Если функция вернула true, закрываем тест вручную
+		}
+	};
+
+	TEST_CLASS(AreEqualSamples)
+	{
+	public:
+
+		TEST_METHOD(areEqualSamples_True)
+		{
+			Sample* a = new Sample();
+			Sample* b = new Sample();
+			strcpy(a->label, "first");
+			strcpy(b->label, "first");
+			a->position = createVectorFromArray(2, 1.0, 1.0);
+			b->position = createVectorFromArray(2, 1.0, 1.0);
+			Assert::AreEqual(true, areEqualSamples(a, b)); 
+		}
+
+		TEST_METHOD(areEqualSamples_DifferentVectors)
+		{
+			Sample* a = new Sample();
+			Sample* b = new Sample();
+			strcpy(a->label, "first");
+			strcpy(b->label, "first");
+			a->position = createVectorFromArray(2, 2.0, 1.0);
+			b->position = createVectorFromArray(2, 1.0, 1.0);
+			Assert::AreEqual(false, areEqualSamples(a, b));
+		}
+
+		TEST_METHOD(areEqualSamples_DifferentNames)
+		{
+			Sample* a = new Sample();
+			Sample* b = new Sample();
+			strcpy(a->label, "first");
+			strcpy(b->label, "second");
+			a->position = createVectorFromArray(2, 1.0, 1.0);
+			b->position = createVectorFromArray(2, 1.0, 1.0);
+			Assert::AreEqual(false, areEqualSamples(a, b));
 		}
 	};
 }
