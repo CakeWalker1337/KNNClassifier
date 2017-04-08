@@ -171,4 +171,33 @@ namespace KNNClassifier_Test
 			Assert::AreEqual(false, areEqualSamples(a, b));
 		}
 	};
+
+	TEST_CLASS(CreateSampleFromString)
+	{
+	public:
+		TEST_METHOD(createSampleFromString_Normal)
+		{
+			Sample* b = createSampleFromString("first, 1.0, 1.0", 2);
+			Sample* a = new Sample();
+			strcpy(a->label, "first");
+			a->position = createVectorFromArray(2, 1.0, 1.0);
+			Assert::AreEqual(true, areEqualSamples(a, b));
+		}
+		TEST_METHOD(createSampleFromString_InvalidSize)
+		{
+			Assert::IsNull(createSampleFromString("first, 1.0, 1.0", 0));
+		}
+	};
+
+	TEST_CLASS(SplitString)
+	{
+	public:
+		TEST_METHOD(splitString_Normal)
+		{
+			char** s = splitString("first, second, third", 3);
+			if (strcmp(s[0], "first") != 0) Assert::Fail();
+			else if (strcmp(s[1], "second") != 0) Assert::Fail();
+			else if (strcmp(s[2], "third") != 0) Assert::Fail();
+		}
+	};
 }
