@@ -181,8 +181,8 @@ namespace KNNClassifier_Test
 			Group* a = new Group();
 			Group* b = new Group();
 			a->count = b->count = 2; 
-			strcpy(a->label, "first");
-			strcpy(b->label, "first");
+			strcpy_s(a->label, "first");
+			strcpy_s(b->label, "first");
 			
 			Assert::AreEqual(true, areEqualGroups(a, b)); 
 		}
@@ -192,8 +192,8 @@ namespace KNNClassifier_Test
 			Group* a = new Group();
 			Group* b = new Group();
 			a->count = b->count = 2; 
-			strcpy(a->label, "first");
-			strcpy(b->label, "second");
+			strcpy_s(a->label, "first");
+			strcpy_s(b->label, "second");
 			Assert::AreNotEqual(true, areEqualGroups(a, b));
 		}
 
@@ -203,8 +203,8 @@ namespace KNNClassifier_Test
 			Group* b = new Group();
 			a->count = 1;
 			b->count = 2; 
-			strcpy(a->label, "first");
-			strcpy(b->label, "first");
+			strcpy_s(a->label, "first");
+			strcpy_s(b->label, "first");
 			if (areEqualGroups(a, b))
 				Assert::Fail(); 
 		}
@@ -217,7 +217,7 @@ namespace KNNClassifier_Test
 		{
 			Sample* b = createSampleFromString("1.0, 1.0, first", 2);
 			Sample* a = new Sample();
-			strcpy(a->label, "first");
+			strcpy_s(a->label, "first");
 			a->position = createVectorFromArray(2, 1.0, 1.0);
 			Assert::AreEqual(true, areEqualSamples(a, b));
 		}
@@ -287,10 +287,10 @@ namespace KNNClassifier_Test
 			s[0] = new Sample();
 			s[1] = new Sample();
 
-			strcpy(s[0]->label, "test");
+			strcpy_s(s[0]->label, "test");
 			s[0]->position = createVectorFromArray(2, 1.0, 1.0);
 
-			strcpy(s[1]->label, "test");
+			strcpy_s(s[1]->label, "test");
 			s[1]->position = createVectorFromArray(2, 2.0, 1.0);
 
 			int count = 0;
@@ -303,14 +303,66 @@ namespace KNNClassifier_Test
 			s[0] = new Sample();
 			s[1] = new Sample();
 
-			strcpy(s[0]->label, "test");
+			strcpy_s(s[0]->label, "test");
 			s[0]->position = createVectorFromArray(2, 1.0, 1.0);
 
-			strcpy(s[1]->label, "test");
+			strcpy_s(s[1]->label, "test");
 			s[1]->position = createVectorFromArray(2, 2.0, 1.0);
 
 			int count = 0;
 			Assert::IsNull(createGroups(s, &count, 0));
+		}
+	};
+	TEST_CLASS(GetClass)
+	{
+	public:
+		TEST_METHOD(getClass_Normal)
+		{
+			Sample** s = new Sample*[2];
+			s[0] = new Sample();
+			s[1] = new Sample();
+
+			strcpy_s(s[0]->label, "first");
+			s[0]->position = createVectorFromArray(2, 1.0, 1.0);
+
+			strcpy_s(s[1]->label, "second");
+			s[1]->position = createVectorFromArray(2, 2.0, 1.0);
+
+			if (strcmp(getClass(createVectorFromArray(2, 2.0, 1.0), 2, s, 2), "second") != 0)
+				Assert::Fail((wchar_t*)L"Error with 2,1");
+
+			if (strcmp(getClass(createVectorFromArray(2, 1.0, 1.0), 2, s, 2), "first") != 0)
+				Assert::Fail((wchar_t*)L"Error with 1,1");
+		}
+
+		TEST_METHOD(getClass_InvalidSize)
+		{
+			Sample** s = new Sample*[2];
+			s[0] = new Sample();
+			s[1] = new Sample();
+
+			strcpy_s(s[0]->label, "first");
+			s[0]->position = createVectorFromArray(2, 1.0, 1.0);
+
+			strcpy_s(s[1]->label, "second");
+			s[1]->position = createVectorFromArray(2, 2.0, 1.0);
+
+			Assert::IsNull(getClass(createVectorFromArray(2, 2.0, 1.0), 2, s, 0));
+		}
+
+		TEST_METHOD(getClass_InvalidK)
+		{
+			Sample** s = new Sample*[2];
+			s[0] = new Sample();
+			s[1] = new Sample();
+
+			strcpy_s(s[0]->label, "first");
+			s[0]->position = createVectorFromArray(2, 1.0, 1.0);
+
+			strcpy_s(s[1]->label, "second");
+			s[1]->position = createVectorFromArray(2, 2.0, 1.0);
+
+			Assert::IsNull(getClass(createVectorFromArray(2, 2.0, 1.0), 0, s, 2));
 		}
 	};
 }

@@ -163,3 +163,44 @@ Group** createGroups(Sample** samples, int* groupCounter, int k)
 
 	return groups2;
 }
+
+char* getClass(Vector* position, int k, Sample** samples, int size)
+{
+	if (size < 1 || k < 1) return NULL;
+
+	double* distances = new double[size];
+	for (int i = 0; i < size; i++) 
+		distances[i] = getDistanceBetweenVectors(position, samples[i]->position);
+	
+	int wasSwapped = 1;
+	while (wasSwapped == 1)
+	{
+		wasSwapped = 0;
+		for (int i = 0; i < size - 1; i++)
+			if (distances[i] > distances[i + 1])
+			{
+				double t = distances[i];
+				distances[i] = distances[i + 1];
+				distances[i + 1] = t;
+				Sample* st = samples[i];
+				samples[i] = samples[i + 1];
+				samples[i + 1] = st;
+				wasSwapped = 1;
+			}
+	}
+
+	int groupCounter = 0;
+	Group** groups = createGroups(samples, &groupCounter, k);
+
+	int max = 0;
+	for (int i = 1; i < groupCounter; i++)
+	{
+		if (groups[i]->count > groups[max]->count)
+			max = i;
+	}
+	char* answer = new char[strlen(groups[max]->label)];
+	strcpy(answer, groups[max]->label);
+	delete[] distances;
+	delete[] groups;
+	return answer;
+}
