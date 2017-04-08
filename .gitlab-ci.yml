@@ -1,11 +1,15 @@
-stages:
-  - build
-
+stages:  
+- build
 job:
   stage: build
   script:
+  - echo "Set another charset"
+  - chcp 65001
   - echo "Restoring NuGet Packages..."
   - D:\Programs\NuGet\nuget.exe restore "KNNClassifier.sln"
   - ''
   - echo "Release build..."
-  - '"C:\Program Files\MSBuild\14.0\Bin\msbuild.exe" /consoleloggerparameters:ErrorsOnly /maxcpucount /nologo /property:Configuration=Release /verbosity:quiet "KNNClassifier.sln"'
+  - '"C:\Program Files\MSBuild\14.0\Bin\msbuild.exe" /consoleloggerparameters:ErrorsOnly /maxcpucount /nologo /property:Configuration=Release /verbosity:quiet /property:Platform=x86 "KNNClassifier.sln"'
+  - echo "Build succeeded!"
+  - '"C:\Program Files\Microsoft Visual Studio 12.0\Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe" "Release\KNNClassifier_Test.dll" /Platform:x86'
+  - echo "Well done!"
