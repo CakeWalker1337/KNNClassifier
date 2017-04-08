@@ -48,7 +48,7 @@ Sample* createSampleFromString(char* line, int vectorSize)
 
 	Sample* s = new Sample();
 	char** m = splitString(line, vectorSize + 1);
-	strcpy(s->label, m[0]);
+	strcpy_s(s->label, m[0]);
 	double* t = new double[vectorSize];
 	for (int i = 0; i < vectorSize; i++)
 	{
@@ -65,4 +65,31 @@ Sample* createSampleFromString(char* line, int vectorSize)
 	}
 	delete[] m;
 	return s;
+}
+
+Sample** readDataFromFile(char* filename, int* size)
+{
+	FILE *f = fopen(filename, "r");
+	if (f == NULL)
+	{
+		printf("Can't open file! ");
+		return NULL;
+	}
+
+	int vectorSize = 0;
+	if (fscanf(f, "%d %d\n", size, &vectorSize) != 2)
+	{
+		printf("Can't read sample size!");
+		return NULL;
+	}
+	Sample** samples = new Sample*[*size];
+	char line[1024];
+	int k = 0;
+
+	while (fgets(line, sizeof(line), f) != NULL)
+	{
+		samples[k] = createSampleFromString(line, vectorSize);
+		k++;
+	}
+	return samples;
 }

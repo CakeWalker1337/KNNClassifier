@@ -10,3 +10,4 @@ struct Sample
 bool areEqualSamples(Sample* s1, Sample* s2);
 Sample* createSampleFromString(char* line, int vectorSize);
 char** splitString(char* line, int pieces);
+Sample** readDataFromFile(char* filename, int* size);
