@@ -15,5 +15,5 @@ bool areEqualSamples(Sample* s1, Sample* s2);
 Sample* createSampleFromString(char* line, int vectorSize);
 char** splitString(char* line, int pieces);
 Sample** readDataFromFile(char* filename, int* size);
-
 bool areEqualGroups(Group* g1, Group* g2);
+int saveDataToFile(char* filename, Sample** samples, int size);
