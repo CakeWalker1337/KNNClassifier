@@ -1,7 +1,6 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include "stdafx.h"
 #include <iostream>
-
 #include "knn.h"
 
 using namespace std;
