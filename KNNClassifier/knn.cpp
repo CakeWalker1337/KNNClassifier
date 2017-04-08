@@ -124,3 +124,42 @@ int saveDataToFile(char* filename, Sample** samples, int size)
 
 	return 0;
 }
+
+Group** createGroups(Sample** samples, int* groupCounter, int k)
+{
+	if (k == 0) return NULL;
+
+	*groupCounter = 0;
+	bool flag = false;
+	Group** groups = new Group*[k];
+	for (int i = 0; i < k; i++)
+	{
+		groups[i] = new Group();
+		flag = false; 
+		for (int j = 0; j < *groupCounter; j++)
+		{
+			if (strcmp(groups[j]->label, samples[i]->label) == 0)
+			{
+				groups[j]->count++;
+				flag = true; 
+				break;
+			}
+		}
+
+		if (!flag)
+		{
+			groups[*groupCounter]->count = 0;
+			strcpy(groups[*groupCounter]->label, samples[i]->label);
+			(*groupCounter)++;
+		}
+	}
+
+	Group** groups2 = new Group*[*groupCounter];
+	for (int i = 0; i < *groupCounter; i++)
+	{
+		groups2[i] = groups[i];
+	}
+	delete[] groups;
+
+	return groups2;
+}

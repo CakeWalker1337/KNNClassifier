@@ -277,4 +277,40 @@ namespace KNNClassifier_Test
 			Assert::AreEqual(0, (saveDataToFile("../KNNClassifier_Test/testfile_normal.txt", s, 0)));
 		}
 	};
+
+	TEST_CLASS(CreateGroups)
+	{
+	public:
+		TEST_METHOD(createGroups_Normal)
+		{
+			Sample** s = new Sample*[2];
+			s[0] = new Sample();
+			s[1] = new Sample();
+
+			strcpy(s[0]->label, "test");
+			s[0]->position = createVectorFromArray(2, 1.0, 1.0);
+
+			strcpy(s[1]->label, "test");
+			s[1]->position = createVectorFromArray(2, 2.0, 1.0);
+
+			int count = 0;
+			createGroups(s, &count, 2);
+			Assert::AreEqual(1, count);
+		}
+		TEST_METHOD(createGroups_InvalidSize)
+		{
+			Sample** s = new Sample*[2];
+			s[0] = new Sample();
+			s[1] = new Sample();
+
+			strcpy(s[0]->label, "test");
+			s[0]->position = createVectorFromArray(2, 1.0, 1.0);
+
+			strcpy(s[1]->label, "test");
+			s[1]->position = createVectorFromArray(2, 2.0, 1.0);
+
+			int count = 0;
+			Assert::IsNull(createGroups(s, &count, 0));
+		}
+	};
 }
