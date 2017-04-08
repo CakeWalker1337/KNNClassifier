@@ -5,6 +5,12 @@
 
 using namespace std;
 
+bool areEqualGroups(Group* g1, Group* g2)
+{
+	if (strcmp(g1->label, g2->label) != 0) return false;
+	return (g1->count == g2->count);
+}
+
 bool areEqualSamples(Sample* s1, Sample* s2)
 {
 	if (strcmp(s1->label, s2->label) != 0) return false;
@@ -48,13 +54,14 @@ Sample* createSampleFromString(char* line, int vectorSize)
 
 	Sample* s = new Sample();
 	char** m = splitString(line, vectorSize + 1);
-	strcpy_s(s->label, m[0]);
+	
 	double* t = new double[vectorSize];
 	for (int i = 0; i < vectorSize; i++)
 	{
 		t[i] = 0.0;
-		t[i] = atof(m[i+1]);
+		t[i] = atof(m[i]);
 	}
+	strcpy_s(s->label, m[vectorSize]);
 	Vector* v = new Vector;
 	v->components = t;
 	v->size = vectorSize;
@@ -92,4 +99,67 @@ Sample** readDataFromFile(char* filename, int* size)
 		k++;
 	}
 	return samples;
+}
+
+int saveDataToFile(char* filename, Sample** samples, int size)
+{
+	if (size == 0)
+		return 0;
+	FILE *f = fopen(filename, "w");
+	if (f == NULL)
+	{
+		printf("Error opening file!\n");
+		return 1;
+	}
+
+	fprintf(f, "%d %d \n", size, samples[0]->position->size);
+	for (int i = 0; i < size; i++)
+	{
+		for (int j = 0; j < samples[i]->position->size; j++)
+			fprintf(f, "%f, ", samples[i]->position->components[j]);
+		fprintf(f, "%s\n", samples[i]->label);
+	}
+
+	fclose(f);
+
+	return 0;
+}
+
+Group** createGroups(Sample** samples, int* groupCounter, int k)
+{
+	if (k == 0) return NULL;
+
+	*groupCounter = 0;
+	bool flag = false;
+	Group** groups = new Group*[k];
+	for (int i = 0; i < k; i++)
+	{
+		groups[i] = new Group();
+		flag = false; 
+		for (int j = 0; j < *groupCounter; j++)
+		{
+			if (strcmp(groups[j]->label, samples[i]->label) == 0)
+			{
+				groups[j]->count++;
+				flag = true; 
+				break;
+			}
+		}
+
+		if (!flag)
+		{
+			groups[*groupCounter]->count = 0;
+			strcpy(groups[*groupCounter]->label, samples[i]->label);
+			(*groupCounter)++;
+		}
+	}
+
+	Group** groups2 = new Group*[*groupCounter];
+	for (int i = 0; i < *groupCounter; i++)
+	{
+		groups2[i] = groups[i];
+	}
+	delete[] groups;
+
+	return groups2;
 }
